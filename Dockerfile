@@ -16,9 +16,9 @@ fi;
 # # Prefer not to run as root.
 # USER deno
 
-COPY ./src/ ./app/
+COPY ./src/ ./src/
 COPY ./bin/ ./bin/
 
-RUN deno cache --unstable ./app/index.ts
+RUN deno cache --unstable ./src/index.ts
 
 CMD ["start.sh"]

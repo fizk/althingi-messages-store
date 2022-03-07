@@ -14,9 +14,9 @@ services:
       - SOURCE_PATH=http://source:80
       - STORE_PATH=http://store:80
     volumes:
-      - ./src:/var/app
+      - ./src:/var/src
       - ./test:/var/test
-    command: bash -c "denon run --allow-net --allow-env --unstable /var/app/index.ts"
+    command: bash -c "denon run --allow-net --allow-env --unstable /var/src/index.ts"
 
   test:
     container_name: local-althingi-messages-store-test
@@ -31,7 +31,7 @@ services:
       - SOURCE_PATH=http://source:80
       - STORE_PATH=http://store:80
     volumes:
-      - ./src:/var/app
+      - ./src:/var/src
       - ./test:/var/test
     command: bash -c "deno test --allow-net --allow-env --unstable"
 
