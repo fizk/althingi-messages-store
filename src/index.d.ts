@@ -29,6 +29,14 @@ export interface Party {
     color: Maybe<string>
 }
 
+export interface Constituency {
+    constituency_id: number
+    name: Maybe<string>
+    abbr_short: Maybe<string>
+    abbr_long: Maybe<string>
+    description: Maybe<string>
+}
+
 export interface Source {
     get: (url: string) => Promise<Record<string, unknown> | Array<Record<string, unknown>>>
 }
