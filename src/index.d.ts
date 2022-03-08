@@ -37,6 +37,21 @@ export interface Constituency {
     description: Maybe<string>
 }
 
+export interface Committee {
+    committee_id: number
+    name: string
+    first_assembly_id: Maybe<number>
+    last_assembly_id: Maybe<number>
+    abbr_long: Maybe<string>
+    abbr_short: Maybe<string>
+}
+
+export interface Inflation {
+    id: number
+    value: number
+    date: string
+}
+
 export interface Source {
     get: (url: string) => Promise<Record<string, unknown> | Array<Record<string, unknown>>>
 }
