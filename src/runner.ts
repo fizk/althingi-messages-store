@@ -11,7 +11,7 @@ const host = Deno.env.get("QUEUE_HOST");
 
 //intialize broker
 const kafka = new Kafka({
-    logLevel: logLevel.INFO,
+    logLevel: logLevel.DEBUG,
     logCreator: prettyConsolelogger2,
     brokers: [`${host}:${port}`],
     clientId: 'store-messanger-consumer',
@@ -22,21 +22,25 @@ export async function runner<T>(
     group: string,
     callback: (data: Message<T>, source: Source, store: Store) => Promise<void>
 ) {
-    const consumer = kafka.consumer({ groupId: group })
-    await consumer.connect();
-    await consumer.subscribe({ topic, fromBeginning: false })
-    await consumer.run({
-        eachMessage: async (payload) => {
-            try {
-                const decoder = new TextDecoder();
-                const response = decoder.decode(payload.message.value as Buffer);
-                const message: Message<T> = JSON.parse(response);
-                await callback(message, SourceClient, StoreClient);
-                console.log(response, topic, group);
-            } catch (e) {
-                const decoder = new TextDecoder();
-                console.error(e.message, topic, group, decoder.decode(payload.message.value as Buffer));
+    try {
+        const consumer = kafka.consumer({ groupId: group })
+        await consumer.connect();
+        await consumer.subscribe({ topic, fromBeginning: false })
+        await consumer.run({
+            eachMessage: async (payload) => {
+                try {
+                    const decoder = new TextDecoder();
+                    const response = decoder.decode(payload.message.value as Buffer);
+                    const message: Message<T> = JSON.parse(response);
+                    await callback(message, SourceClient, StoreClient);
+                    console.log(response, topic, group);
+                } catch (e) {
+                    const decoder = new TextDecoder();
+                    console.error(e.message, topic, group, decoder.decode(payload.message.value as Buffer));
+                }
             }
-        }
-    });
+        });
+    } catch (e) {
+        console.log(e);
+    }
 }
