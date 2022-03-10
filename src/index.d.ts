@@ -52,6 +52,14 @@ export interface Inflation {
     date: string
 }
 
+export interface Congressman {
+    congressman_id: number
+    name: string
+    birth: string
+    death: Maybe<string>
+    abbreviation: Maybe<string>
+}
+
 export interface Source {
     get: (url: string) => Promise<Record<string, unknown> | Array<Record<string, unknown>>>
 }

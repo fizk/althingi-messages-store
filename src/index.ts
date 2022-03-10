@@ -5,11 +5,13 @@ import * as PartyHandler from './handlers/Party.ts';
 import * as ConstituencyHandler from './handlers/Constituency.ts';
 import * as CommitteeHandler from './handlers/Committee.ts';
 import * as InflationHandler from './handlers/Inflation.ts';
+import * as CongressmanHandler from './handlers/Congressman.ts';
 import type {
     Assembly,
     Ministry,
     Party,
     Committee,
+    Congressman,
     Constituency,
     Inflation
 } from './index.d.ts';
@@ -31,3 +33,6 @@ runner<Committee>('committee.update', 'CommitteeHandler.update', CommitteeHandle
 
 runner<Inflation>('inflation.add', 'InflationHandler.add', InflationHandler.add);
 runner<Inflation>('inflation.update', 'InflationHandler.update', InflationHandler.update);
+
+runner<Congressman>('congressman.add', 'CongressmanHandler.add', CongressmanHandler.add);
+runner<Congressman>('congressman.update', 'CongressmanHandler.update', CongressmanHandler.update);
