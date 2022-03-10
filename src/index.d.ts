@@ -60,6 +60,18 @@ export interface Congressman {
     abbreviation: Maybe<string>
 }
 
+export interface CongressmanSitting {
+    session_id: number
+    congressman_id: number
+    constituency_id: number
+    assembly_id: number
+    party_id: Maybe<number>
+    from: Maybe<string>
+    to: Maybe<string>
+    type: Maybe<string>
+    abbr: Maybe<string>
+}
+
 export interface Source {
     get: (url: string) => Promise<Record<string, unknown> | Array<Record<string, unknown>>>
 }

@@ -6,12 +6,14 @@ import * as ConstituencyHandler from './handlers/Constituency.ts';
 import * as CommitteeHandler from './handlers/Committee.ts';
 import * as InflationHandler from './handlers/Inflation.ts';
 import * as CongressmanHandler from './handlers/Congressman.ts';
+import * as CongressmanSittingHandler from './handlers/CongressmanSitting.ts';
 import type {
     Assembly,
     Ministry,
     Party,
     Committee,
     Congressman,
+    CongressmanSitting,
     Constituency,
     Inflation
 } from './index.d.ts';
@@ -36,3 +38,6 @@ runner<Inflation>('inflation.update', 'InflationHandler.update', InflationHandle
 
 runner<Congressman>('congressman.add', 'CongressmanHandler.add', CongressmanHandler.add);
 runner<Congressman>('congressman.update', 'CongressmanHandler.update', CongressmanHandler.update);
+
+runner<CongressmanSitting>('session.add', 'CongressmanSittingHandler.add', CongressmanSittingHandler.add);
+runner<CongressmanSitting>('session.update', 'CongressmanSittingHandler.update', CongressmanSittingHandler.update);
