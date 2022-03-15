@@ -72,8 +72,29 @@ export interface CongressmanSitting {
     abbr: Maybe<string>
 }
 
+export interface CommitteeSitting {
+    committee_sitting_id: number
+    congressman_id: number
+    committee_id: number
+    assembly_id: number
+    order: Maybe<number>
+    role: Maybe<string>
+    from: string
+    to: Maybe<string>
+}
+
+export interface MinisterSitting {
+    minister_sitting_id : number
+    assembly_id: number
+    ministry_id: number
+    congressman_id: number
+    party_id: Maybe<number>
+    from: string
+    to: Maybe<string>
+}
+
 export interface Source {
-    get: (url: string) => Promise<Record<string, unknown> | Array<Record<string, unknown>>>
+    get: <T>(url: string) => Promise<T>
 }
 
 export interface Store {

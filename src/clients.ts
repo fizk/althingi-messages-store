@@ -4,12 +4,16 @@ const sourcePath = Deno.env.get("SOURCE_PATH");
 const storePath = Deno.env.get("STORE_PATH");
 
 export const SourceClient: Source = {
-    get: async (url: string): Promise<Record<string, unknown> | Array<Record<string, unknown>>> => {
+    get: async <T = null>(url: string): Promise<T | null> => {
         const response = await fetch(`${sourcePath}${url}`);
 
         console.log(`GET ${storePath}${url} - ${response.status}`);
 
-        return response.json();
+        if (response.status === 200) {
+            return response.json();
+        }
+        return Promise.resolve(null);
+
     }
 };
 

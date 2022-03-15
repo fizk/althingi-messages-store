@@ -7,37 +7,49 @@ import * as CommitteeHandler from './handlers/Committee.ts';
 import * as InflationHandler from './handlers/Inflation.ts';
 import * as CongressmanHandler from './handlers/Congressman.ts';
 import * as CongressmanSittingHandler from './handlers/CongressmanSitting.ts';
+import * as CommitteeSittingHandler from './handlers/CommitteeSitting.ts';
+import * as MinisterSittingHandler from './handlers/MinisterSitting.ts';
 import type {
     Assembly,
-    Ministry,
-    Party,
     Committee,
+    CommitteeSitting,
     Congressman,
     CongressmanSitting,
     Constituency,
-    Inflation
+    Ministry,
+    MinisterSitting,
+    Inflation,
+    Party,
 } from './index.d.ts';
 
-runner<Assembly>('assembly.add', 'AssemblyHandler.add', AssemblyHandler.add);
-runner<Assembly>('assembly.update', 'AssemblyHandler.update', AssemblyHandler.update);
+runner<Assembly>('assembly.add', 'AssemblyHandler.add', AssemblyHandler.handle);
+runner<Assembly>('assembly.update', 'AssemblyHandler.update', AssemblyHandler.handle);
 
-runner<Ministry>('ministry.add', 'MinistryHandler.add', MinistryHandler.add);
-runner<Ministry>('ministry.update', 'MinistryHandler.update', MinistryHandler.update);
+runner<Ministry>('ministry.add', 'MinistryHandler.add', MinistryHandler.handle);
+runner<Ministry>('ministry.update', 'MinistryHandler.update', MinistryHandler.handle);
 
-runner<Party>('party.add', 'PartyHandler.add', PartyHandler.add);
-runner<Party>('party.update', 'PartyHandler.update', PartyHandler.update);
+runner<Party>('party.add', 'PartyHandler.add', PartyHandler.handle);
+runner<Party>('party.update', 'PartyHandler.update', PartyHandler.handle);
 
-runner<Constituency>('constituency.add', 'ConstituencyHandler.add', ConstituencyHandler.add);
-runner<Constituency>('constituency.update', 'ConstituencyHandler.update', ConstituencyHandler.update);
+runner<Constituency>('constituency.add', 'ConstituencyHandler.add', ConstituencyHandler.handle);
+runner<Constituency>('constituency.update', 'ConstituencyHandler.update', ConstituencyHandler.handle);
 
-runner<Committee>('committee.add', 'CommitteeHandler.add', CommitteeHandler.add);
-runner<Committee>('committee.update', 'CommitteeHandler.update', CommitteeHandler.update);
+runner<Committee>('committee.add', 'CommitteeHandler.add', CommitteeHandler.handle);
+runner<Committee>('committee.update', 'CommitteeHandler.update', CommitteeHandler.handle);
 
-runner<Inflation>('inflation.add', 'InflationHandler.add', InflationHandler.add);
-runner<Inflation>('inflation.update', 'InflationHandler.update', InflationHandler.update);
+runner<Inflation>('inflation.add', 'InflationHandler.add', InflationHandler.handle);
+runner<Inflation>('inflation.update', 'InflationHandler.update', InflationHandler.handle);
 
-runner<Congressman>('congressman.add', 'CongressmanHandler.add', CongressmanHandler.add);
-runner<Congressman>('congressman.update', 'CongressmanHandler.update', CongressmanHandler.update);
+runner<Congressman>('congressman.add', 'CongressmanHandler.add', CongressmanHandler.handle);
+runner<Congressman>('congressman.update', 'CongressmanHandler.update', CongressmanHandler.handle);
 
-runner<CongressmanSitting>('session.add', 'CongressmanSittingHandler.add', CongressmanSittingHandler.add);
-runner<CongressmanSitting>('session.update', 'CongressmanSittingHandler.update', CongressmanSittingHandler.update);
+runner<CongressmanSitting>('session.add', 'CongressmanSittingHandler.add', CongressmanSittingHandler.handle);
+runner<CongressmanSitting>('session.update', 'CongressmanSittingHandler.update', CongressmanSittingHandler.handle);
+
+runner<CommitteeSitting>('committee-sitting.add', 'CommitteeSittingHandler.add', CommitteeSittingHandler.handle);
+runner<CommitteeSitting>('committee-sitting.update', 'CommitteeSittingHandler.update', CommitteeSittingHandler.handle);
+
+runner<MinisterSitting>('minister-sitting.add', 'CommitteeSittingHandler.add', MinisterSittingHandler.handle);
+runner<MinisterSitting>('minister-sitting.update', 'CommitteeSittingHandler.update', MinisterSittingHandler.handle);
+
+//president

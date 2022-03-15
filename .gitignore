@@ -705,3 +705,7 @@ FodyWeavers.xsd
 
 # Include the root binary folder
 !/bin
+
+cov_profile
+cov_profile/*
+cov_profile.lcov

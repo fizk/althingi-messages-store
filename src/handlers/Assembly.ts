@@ -1,10 +1,5 @@
-import type { Assembly, Message } from '../index.d.ts';
-import type { SourceClient, StoreClient } from '../clients.ts';
+import type { Assembly, Message, Source, Store } from '../index.d.ts';
 
-export async function update(data: Message<Assembly>, _source: typeof SourceClient, store: typeof StoreClient): Promise<void> {
-    await store.put(`/loggjafarthing/${data.body.assembly_id}`, data.body);
-}
-
-export async function add(data: Message<Assembly>, _source: typeof SourceClient, store: typeof StoreClient): Promise<void> {
+export async function handle(data: Message<Assembly>, _source: Source, store: Store): Promise<void> {
     await store.put(`/loggjafarthing/${data.body.assembly_id}`, data.body);
 }

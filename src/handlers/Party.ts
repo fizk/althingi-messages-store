@@ -1,10 +1,5 @@
-import type { Party, Message } from '../index.d.ts';
-import type { SourceClient, StoreClient } from '../clients.ts';
+import type { Party, Message, Store, Source } from '../index.d.ts';
 
-export async function update(data: Message<Party>, _source: typeof SourceClient, store: typeof StoreClient): Promise<void> {
-    await store.put(`/thingflokkar/${data.body.party_id}`, data.body);
-}
-
-export async function add(data: Message<Party>, _source: typeof SourceClient, store: typeof StoreClient): Promise<void> {
+export async function handle(data: Message<Party>, _source: Source, store: Store): Promise<void> {
     await store.put(`/thingflokkar/${data.body.party_id}`, data.body);
 }

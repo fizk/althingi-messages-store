@@ -1,10 +1,5 @@
-import type { Inflation, Message } from '../index.d.ts';
-import type { SourceClient, StoreClient } from '../clients.ts';
+import type { Inflation, Message, Source, Store } from '../index.d.ts';
 
-export async function update(data: Message<Inflation>, _source: typeof SourceClient, store: typeof StoreClient): Promise<void> {
-    await store.put(`/verdbolga/${data.body.id}`, data.body);
-}
-
-export async function add(data: Message<Inflation>, _source: typeof SourceClient, store: typeof StoreClient): Promise<void> {
+export async function handle(data: Message<Inflation>, _source: Source, store: Store): Promise<void> {
     await store.put(`/verdbolga/${data.body.id}`, data.body);
 }
