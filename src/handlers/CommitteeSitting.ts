@@ -44,8 +44,8 @@ export async function handle(data: Message<CommitteeSitting>, source: Source, st
         assembly,
         committee,
         congressman,
-        party: parties?.at(0) || null,
-        constituency: constituencies?.at(0) || null,
+        congressman_party: parties?.at(0) || null,
+        congressman_constituency: constituencies?.at(0) || null,
         first_committee_assembly,
         last_committee_assembly
     });

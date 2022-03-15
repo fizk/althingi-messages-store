@@ -29,10 +29,10 @@ export async function handle(data: Message<MinisterSitting>, source: Source, sto
     await store.put(`/radherraseta/${data.body.minister_sitting_id}`, {
         ...body,
         assembly,
-        congressman,
         ministry,
-        constituenc: constituencies.at(0) || null,
-        party,
+        congressman,
+        congressman_constituency: constituencies.at(0) || null,
+        congressman_party: party,
         first_ministry_assembly,
         last_ministry_assembly,
     });

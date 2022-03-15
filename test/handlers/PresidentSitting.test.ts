@@ -1,17 +1,16 @@
 import { assertEquals } from "https://deno.land/std@0.128.0/testing/asserts.ts";
-import { handle } from '../../src/handlers/CongressmanSitting.ts'
+import { handle } from '../../src/handlers/PresidentSitting.ts'
 import type {
     Assembly,
     Congressman,
     Constituency,
-    Party
+    Party,
 } from '../../src/index.d.ts';
 
-
-Deno.test("CongressmanSitting.handle", async () => {
+Deno.test("PresidentSitting.handle", async () => {
     function* generateResponse() {
         yield Promise.resolve<Assembly>({
-            assembly_id: 4,
+            assembly_id: 3,
             from: '2001-01-01',
             to: '2001-01-01',
         });
@@ -22,20 +21,20 @@ Deno.test("CongressmanSitting.handle", async () => {
             birth: '2001-01-01',
             death: null
         });
-        yield Promise.resolve<Constituency>({
-            constituency_id: 3,
-            abbr_long: 'abbr_long',
-            abbr_short: 'abbr_short',
-            description: null,
-            name: 'constituency_name'
-        });
-        yield Promise.resolve<Party>({
+        yield Promise.resolve<Party[]>([{
             party_id: 5,
             name: 'party_name',
             abbr_long: 'abbr_long',
             abbr_short: 'abbr_short',
             color: null,
-        });
+        }]);
+        yield Promise.resolve<Constituency[]>([{
+            constituency_id: 3,
+            abbr_long: 'abbr_long',
+            abbr_short: 'abbr_short',
+            description: null,
+            name: 'constituency_name'
+        }]);
 
         return Promise.reject({});
     }
@@ -43,17 +42,15 @@ Deno.test("CongressmanSitting.handle", async () => {
 
     await handle({
         id: 1,
-        index: 'congressman-sitting.add',
+        index: 'president.add',
         body: {
-            session_id: 1,
+            president_id: 1,
             congressman_id: 2,
-            constituency_id: 3,
-            assembly_id: 4,
-            party_id: 5,
-            from: "2001-01-01",
-            to: "2001-01-01",
-            type: "type",
-            abbr: "abbr",
+            assembly_id: 3,
+            from: '2001-01-01',
+            to: null,
+            title: 'title',
+            abbr: 'abbr',
         }
     }, {
         get: <T>(_url: string): Promise<T>  => {
@@ -62,7 +59,11 @@ Deno.test("CongressmanSitting.handle", async () => {
     }, {
         put: (url: string, data: unknown) => {
             assertEquals(data, {
-                session_id: 1,
+                president_id: 1,
+                title: 'title',
+                abbr: 'abbr',
+                from: '2001-01-01',
+                to: null,
                 congressman: {
                     congressman_id: 2,
                     name: 'congressman_name',
@@ -78,7 +79,7 @@ Deno.test("CongressmanSitting.handle", async () => {
                     name: 'constituency_name'
                 },
                 assembly: {
-                    assembly_id: 4,
+                    assembly_id: 3,
                     from: '2001-01-01',
                     to: '2001-01-01',
                 },
@@ -89,21 +90,17 @@ Deno.test("CongressmanSitting.handle", async () => {
                     abbr_short: 'abbr_short',
                     color: null,
                 },
-                from: "2001-01-01",
-                to: "2001-01-01",
-                type: "type",
-                abbr: "abbr",
             });
-            assertEquals(url, '/thingseta/1')
-            return Promise.resolve(200)
+            assertEquals(url, '/forsetaseta/1');
+            return Promise.resolve(200);
         }
     });
 });
 
-Deno.test("CongressmanSitting.handle | No party", async () => {
+Deno.test("PresidentSitting.handle | no party or constituency", async () => {
     function* generateResponse() {
         yield Promise.resolve<Assembly>({
-            assembly_id: 4,
+            assembly_id: 3,
             from: '2001-01-01',
             to: '2001-01-01',
         });
@@ -114,13 +111,8 @@ Deno.test("CongressmanSitting.handle | No party", async () => {
             birth: '2001-01-01',
             death: null
         });
-        yield Promise.resolve<Constituency>({
-            constituency_id: 3,
-            abbr_long: 'abbr_long',
-            abbr_short: 'abbr_short',
-            description: null,
-            name: 'constituency_name'
-        });
+        yield Promise.resolve<Party[]>([]);
+        yield Promise.resolve<Constituency[]>([]);
 
         return Promise.reject({});
     }
@@ -128,17 +120,15 @@ Deno.test("CongressmanSitting.handle | No party", async () => {
 
     await handle({
         id: 1,
-        index: 'congressman-sitting.add',
+        index: 'president.add',
         body: {
-            session_id: 1,
+            president_id: 1,
             congressman_id: 2,
-            constituency_id: 3,
-            assembly_id: 4,
-            party_id: null,
-            from: "2001-01-01",
-            to: "2001-01-01",
-            type: "type",
-            abbr: "abbr",
+            assembly_id: 3,
+            from: '2001-01-01',
+            to: null,
+            title: 'title',
+            abbr: 'abbr',
         }
     }, {
         get: <T>(_url: string): Promise<T>  => {
@@ -147,7 +137,11 @@ Deno.test("CongressmanSitting.handle | No party", async () => {
     }, {
         put: (url: string, data: unknown) => {
             assertEquals(data, {
-                session_id: 1,
+                president_id: 1,
+                title: 'title',
+                abbr: 'abbr',
+                from: '2001-01-01',
+                to: null,
                 congressman: {
                     congressman_id: 2,
                     name: 'congressman_name',
@@ -155,26 +149,16 @@ Deno.test("CongressmanSitting.handle | No party", async () => {
                     birth: '2001-01-01',
                     death: null
                 },
-                congressman_constituency: {
-                    constituency_id: 3,
-                    abbr_long: 'abbr_long',
-                    abbr_short: 'abbr_short',
-                    description: null,
-                    name: 'constituency_name'
-                },
+                congressman_constituency: null,
+                congressman_party: null,
                 assembly: {
-                    assembly_id: 4,
+                    assembly_id: 3,
                     from: '2001-01-01',
                     to: '2001-01-01',
                 },
-                congressman_party: null,
-                from: "2001-01-01",
-                to: "2001-01-01",
-                type: "type",
-                abbr: "abbr",
             });
-            assertEquals(url, '/thingseta/1')
-            return Promise.resolve(200)
+            assertEquals(url, '/forsetaseta/1');
+            return Promise.resolve(200);
         }
     });
 });

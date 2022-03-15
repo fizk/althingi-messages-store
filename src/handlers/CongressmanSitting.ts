@@ -12,7 +12,7 @@ export async function handle(data: Message<CongressmanSitting>, source: Source, 
         ...body,
         assembly,
         congressman,
-        constituency,
-        party
+        congressman_constituency: constituency,
+        congressman_party: party
     });
 }

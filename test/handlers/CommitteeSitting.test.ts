@@ -87,7 +87,7 @@ Deno.test("CommitteeSitting.handle", async () => {
                     birth: '2001-01-01',
                     death: null
                 },
-                constituency: {
+                congressman_constituency: {
                     constituency_id: 3,
                     abbr_long: 'abbr_long',
                     abbr_short: 'abbr_short',
@@ -99,7 +99,7 @@ Deno.test("CommitteeSitting.handle", async () => {
                     from: '2001-01-01',
                     to: '2001-01-01',
                 },
-                party: {
+                congressman_party: {
                     party_id: 5,
                     name: 'party_name',
                     abbr_long: 'abbr_long',
@@ -204,7 +204,7 @@ Deno.test("CommitteeSitting.handle | only required", async () => {
                     birth: '2001-01-01',
                     death: null
                 },
-                constituency: {
+                congressman_constituency: {
                     constituency_id: 3,
                     abbr_long: 'abbr_long',
                     abbr_short: 'abbr_short',
@@ -216,7 +216,7 @@ Deno.test("CommitteeSitting.handle | only required", async () => {
                     from: '2001-01-01',
                     to: '2001-01-01',
                 },
-                party: {
+                congressman_party: {
                     party_id: 5,
                     name: 'party_name',
                     abbr_long: 'abbr_long',
@@ -306,8 +306,8 @@ Deno.test("CommitteeSitting.handle | no party or constituency", async () => {
                     from: '2001-01-01',
                     to: '2001-01-01',
                 },
-                party: null,
-                constituency: null,
+                congressman_party: null,
+                congressman_constituency: null,
                 committee: {
                     committee_id: 1,
                     name: 'name',

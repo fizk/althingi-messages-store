@@ -100,14 +100,14 @@ Deno.test("MinisterSitting.handle", async () => {
                     first: 10,
                     last: 20,
                 },
-                constituenc: {
+                congressman_constituency: {
                     constituency_id: 3,
                     abbr_long: 'abbr_long',
                     abbr_short: 'abbr_short',
                     description: null,
                     name: 'constituency_name'
                 },
-                party: {
+                congressman_party: {
                     party_id: 5,
                     name: 'party_name',
                     abbr_long: 'abbr_long',
@@ -210,8 +210,8 @@ Deno.test("MinisterSitting.handle | no constituency, no party", async () => {
                     first: 10,
                     last: 20,
                 },
-                constituenc: null,
-                party: null,
+                congressman_constituency: null,
+                congressman_party: null,
                 first_ministry_assembly: {
                     assembly_id: 10,
                     from: '2001-01-01',
@@ -311,14 +311,14 @@ Deno.test("MinisterSitting.handle | no ministry assembly", async () => {
                     first: null,
                     last: null,
                 },
-                constituenc: {
+                congressman_constituency: {
                     constituency_id: 3,
                     abbr_long: 'abbr_long',
                     abbr_short: 'abbr_short',
                     description: null,
                     name: 'constituency_name'
                 },
-                party: {
+                congressman_party: {
                     party_id: 5,
                     name: 'party_name',
                     abbr_long: 'abbr_long',

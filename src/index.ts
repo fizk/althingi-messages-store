@@ -9,6 +9,7 @@ import * as CongressmanHandler from './handlers/Congressman.ts';
 import * as CongressmanSittingHandler from './handlers/CongressmanSitting.ts';
 import * as CommitteeSittingHandler from './handlers/CommitteeSitting.ts';
 import * as MinisterSittingHandler from './handlers/MinisterSitting.ts';
+import * as PresidentSittingHandler from './handlers/PresidentSitting.ts';
 import type {
     Assembly,
     Committee,
@@ -20,6 +21,7 @@ import type {
     MinisterSitting,
     Inflation,
     Party,
+    PresidentSitting,
 } from './index.d.ts';
 
 runner<Assembly>('assembly.add', 'AssemblyHandler.add', AssemblyHandler.handle);
@@ -52,4 +54,5 @@ runner<CommitteeSitting>('committee-sitting.update', 'CommitteeSittingHandler.up
 runner<MinisterSitting>('minister-sitting.add', 'CommitteeSittingHandler.add', MinisterSittingHandler.handle);
 runner<MinisterSitting>('minister-sitting.update', 'CommitteeSittingHandler.update', MinisterSittingHandler.handle);
 
-//president
+runner<PresidentSitting>('president.add', 'PresidentSittingHandler.add', PresidentSittingHandler.handle);
+runner<PresidentSitting>('president.update', 'PresidentSittingHandler.update', PresidentSittingHandler.handle);

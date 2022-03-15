@@ -83,6 +83,16 @@ export interface CommitteeSitting {
     to: Maybe<string>
 }
 
+export interface PresidentSitting {
+    president_id : number
+    congressman_id: number
+    assembly_id: number
+    from : string
+    to: Maybe<string>
+    title: string
+    abbr: Maybe<string>
+}
+
 export interface MinisterSitting {
     minister_sitting_id : number
     assembly_id: number
