@@ -4,6 +4,7 @@ import type {
     Constituency,
     Ministry,
     MinisterSitting,
+    MinisterSittingPayload,
     Party,
     Message,
     Source,
@@ -26,7 +27,7 @@ export async function handle(data: Message<MinisterSitting>, source: Source, sto
         ministry?.last ? source.get<Assembly>(`/loggjafarthing/${ministry?.last}`) : Promise.resolve(null),
     ]);
 
-    await store.put(`/radherraseta/${data.body.minister_sitting_id}`, {
+    await store.put<MinisterSittingPayload>(`/radherraseta/${data.body.minister_sitting_id}`, {
         ...body,
         assembly,
         ministry,

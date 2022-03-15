@@ -1,4 +1,5 @@
 import type {
+    CommitteePayload,
     Committee,
     Message,
     Source,
@@ -12,7 +13,7 @@ export async function handle(data: Message<Committee>, source: Source, store: St
         first_assembly_id ? source.get<Assembly>(`/loggjafarthing/${first_assembly_id}`) : Promise.resolve(null),
         last_assembly_id ? source.get<Assembly>(`/loggjafarthing/${last_assembly_id}`) : Promise.resolve(null),
     ]);
-    await store.put(`/nefndir/${data.body.committee_id}`, {
+    await store.put<CommitteePayload>(`/nefndir/${data.body.committee_id}`, {
         ...body,
         first,
         last

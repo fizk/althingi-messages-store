@@ -1,7 +1,6 @@
 import { assertEquals } from "https://deno.land/std@0.128.0/testing/asserts.ts";
-import { handle } from '../../src/handlers/Assembly.ts'
+import { handle } from '../../src/handlers/Assembly.ts';
 
-// Compact form: name and function
 Deno.test("Assembly.handle", async () => {
     await handle({
         id: 1,

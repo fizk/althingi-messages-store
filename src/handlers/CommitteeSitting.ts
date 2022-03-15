@@ -1,5 +1,6 @@
 import type {
     CommitteeSitting,
+    CommitteeSittingPayload,
     Committee,
     Assembly,
     Congressman,
@@ -39,7 +40,7 @@ export async function handle(data: Message<CommitteeSitting>, source: Source, st
             : Promise.resolve(null),
     ]);
 
-    await store.put(`/nefndarseta/${body.committee_sitting_id}`, {
+    await store.put<CommitteeSittingPayload>(`/nefndarseta/${body.committee_sitting_id}`, {
         ...body,
         assembly,
         committee,

@@ -1,5 +1,6 @@
 import type {
     PresidentSitting,
+    PresidentSittingPayload,
     Congressman,
     Party,
     Constituency,
@@ -19,7 +20,7 @@ export async function handle(data: Message<PresidentSitting>, source: Source, st
         congressman_id ? source.get<Constituency[]>(`/thingmenn/${congressman_id}/kjordaemi?dags=${body.from}`) : Promise.resolve([]),
     ]);
 
-    await store.put(`/forsetaseta/${data.body.president_id}`, {
+    await store.put<PresidentSittingPayload>(`/forsetaseta/${data.body.president_id}`, {
         ...body,
         assembly,
         congressman,

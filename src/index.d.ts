@@ -103,10 +103,117 @@ export interface MinisterSitting {
     to: Maybe<string>
 }
 
+export interface AssemblyPayload {
+    assembly_id: number
+    from: Maybe<string>
+    to: Maybe<string>
+}
+
+export interface CommitteePayload {
+    committee_id: number
+    name: string
+    abbr_long: Maybe<string>
+    abbr_short: Maybe<string>
+    first: Maybe<Assembly>,
+    last: Maybe<Assembly>,
+}
+
+export interface CommitteeSittingPayload {
+    committee_sitting_id: number
+    order: Maybe<number>
+    role: Maybe<string>
+    from: string
+    to: Maybe<string>
+    assembly: Maybe<Assembly>,
+    committee: Maybe<Committee>,
+    congressman: Maybe<Congressman>,
+    congressman_party: Maybe<Party>
+    congressman_constituency: Maybe<Constituency>,
+    first_committee_assembly: Maybe<Assembly>,
+    last_committee_assembly: Maybe<Assembly>
+}
+
+export interface CongressmanPayload {
+    congressman_id: number
+    name: string
+    birth: string
+    death: Maybe<string>
+    abbreviation: Maybe<string>
+}
+
+export interface CongressmanSittingPayload {
+    session_id: number
+    from: Maybe<string>
+    to: Maybe<string>
+    type: Maybe<string>
+    abbr: Maybe<string>
+    assembly: Assembly,
+    congressman: Congressman,
+    congressman_constituency: Constituency,
+    congressman_party: Maybe<Party>
+}
+
+export interface ConstituencyPayload {
+    constituency_id: number
+    name: Maybe<string>
+    abbr_short: Maybe<string>
+    abbr_long: Maybe<string>
+    description: Maybe<string>
+}
+
+export interface InflationPayload {
+    id: number
+    value: number
+    date: string
+}
+
+export interface MinisterSittingPayload {
+    minister_sitting_id: number
+    from: string
+    to: Maybe<string>
+    assembly: Maybe<Assembly>
+    ministry: Maybe<Ministry>
+    congressman: Maybe<Congressman>
+    congressman_constituency: Maybe<Constituency>
+    congressman_party: Maybe<Party>
+    first_ministry_assembly: Maybe<Assembly>
+    last_ministry_assembly: Maybe<Assembly>
+}
+
+export interface MinistryPayload {
+    ministry_id: number
+    name: Maybe<string>
+    abbr_short: Maybe<string>
+    abbr_long: Maybe<string>
+    first: Maybe<Assembly>
+    last: Maybe<Assembly>
+}
+
+export interface PartyPayload {
+    party_id: number
+    name: string
+    abbr_short: Maybe<string>
+    abbr_long: Maybe<string>
+    color: Maybe<string>
+}
+
+export interface PresidentSittingPayload {
+    president_id: number
+    from: string
+    to: Maybe<string>
+    title: string
+    abbr: Maybe<string>
+    assembly: Maybe<Assembly>
+    congressman: Maybe<Congressman>
+    congressman_party: Maybe<Party>
+    congressman_constituency: Maybe<Constituency>
+
+}
+
 export interface Source {
     get: <T>(url: string) => Promise<T>
 }
 
 export interface Store {
-    put: (url: string, data: unknown) => Promise<number>
+    put: <T>(url: string, data: T) => Promise<number>
 }
