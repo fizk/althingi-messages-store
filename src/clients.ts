@@ -4,7 +4,7 @@ const sourcePath = Deno.env.get("SOURCE_PATH");
 const storePath = Deno.env.get("STORE_PATH");
 
 export const SourceClient: Source = {
-    get: async <T = null>(url: string): Promise<T | null> => {
+    get: async <T>(url: string): Promise<T | null> => {
         const response = await fetch(`${sourcePath}${url}`);
 
         console.log(`GET ${storePath}${url} - ${response.status}`);
@@ -13,7 +13,6 @@ export const SourceClient: Source = {
             return response.json();
         }
         return Promise.resolve(null);
-
     }
 };
 

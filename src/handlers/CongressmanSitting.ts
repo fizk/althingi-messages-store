@@ -20,9 +20,9 @@ export async function handle(data: Message<CongressmanSitting>, source: Source, 
     ]);
     await store.put<CongressmanSittingPayload>(`/thingseta/${body.session_id}`, {
         ...body,
-        assembly,
-        congressman,
-        congressman_constituency: constituency,
+        assembly: assembly!,
+        congressman: congressman!,
+        congressman_constituency: constituency!,
         congressman_party: party
     });
 }

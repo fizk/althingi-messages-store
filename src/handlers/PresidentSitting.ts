@@ -24,7 +24,7 @@ export async function handle(data: Message<PresidentSitting>, source: Source, st
         ...body,
         assembly,
         congressman,
-        congressman_party: parties.at(0) || null,
-        congressman_constituency: constituencies.at(0) || null,
+        congressman_party: parties?.at(0) || null,
+        congressman_constituency: constituencies?.at(0) || null,
     });
 }

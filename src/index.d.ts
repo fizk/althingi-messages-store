@@ -211,7 +211,7 @@ export interface PresidentSittingPayload {
 }
 
 export interface Source {
-    get: <T>(url: string) => Promise<T>
+    get: <T>(url: string) => Promise<T | null>
 }
 
 export interface Store {
