@@ -51,8 +51,8 @@ runner<CongressmanSitting>('session.update', 'CongressmanSittingHandler.update',
 runner<CommitteeSitting>('committee-sitting.add', 'CommitteeSittingHandler.add', CommitteeSittingHandler.handle);
 runner<CommitteeSitting>('committee-sitting.update', 'CommitteeSittingHandler.update', CommitteeSittingHandler.handle);
 
-runner<MinisterSitting>('minister-sitting.add', 'CommitteeSittingHandler.add', MinisterSittingHandler.handle);
-runner<MinisterSitting>('minister-sitting.update', 'CommitteeSittingHandler.update', MinisterSittingHandler.handle);
+runner<MinisterSitting>('minister-sitting.add', 'MinisterSittingHandler.add', MinisterSittingHandler.handle);
+runner<MinisterSitting>('minister-sitting.update', 'MinisterSittingHandler.update', MinisterSittingHandler.handle);
 
 runner<PresidentSitting>('president.add', 'PresidentSittingHandler.add', PresidentSittingHandler.handle);
 runner<PresidentSitting>('president.update', 'PresidentSittingHandler.update', PresidentSittingHandler.handle);
