@@ -1,28 +1,29 @@
 import { assertEquals } from "https://deno.land/std@0.128.0/testing/asserts.ts";
 import { handle } from '../../src/handlers/MinisterSitting.ts';
 import type {
-    Assembly,
-    Congressman ,
-    Ministry,
-    Constituency,
-    Party
+    // Assembly,
+    // Congressman ,
+    // Ministry,
+    // Constituency,
+    // Party,
+    Messages
 } from '../../src/index.d.ts';
 
 Deno.test("MinisterSitting.handle", async () => {
     function* generateResponse() {
-        yield Promise.resolve<Assembly>({
+        yield Promise.resolve<Messages.Assembly>({
             assembly_id: 2,
             from: '2001-01-01',
             to: '2001-01-01',
         });
-        yield Promise.resolve<Congressman>({
+        yield Promise.resolve<Messages.Congressman>({
             congressman_id: 3,
             name: 'congressman_name',
             abbreviation: 'abbr',
             birth: '2001-01-01',
             death: null
         });
-        yield Promise.resolve<Ministry>({
+        yield Promise.resolve<Messages.Ministry>({
             ministry_id: 4,
             name: 'name',
             abbr_short: 'abbr_short',
@@ -30,26 +31,26 @@ Deno.test("MinisterSitting.handle", async () => {
             first: 10,
             last: 20,
         });
-        yield Promise.resolve<Constituency[]>([{
+        yield Promise.resolve<Messages.Constituency[]>([{
             constituency_id: 3,
             abbr_long: 'abbr_long',
             abbr_short: 'abbr_short',
             description: null,
             name: 'constituency_name'
         }]);
-        yield Promise.resolve<Party>({
+        yield Promise.resolve<Messages.Party>({
             party_id: 5,
             name: 'party_name',
             abbr_long: 'abbr_long',
             abbr_short: 'abbr_short',
             color: null,
         });
-        yield Promise.resolve<Assembly>({
+        yield Promise.resolve<Messages.Assembly>({
             assembly_id: 10,
             from: '2001-01-01',
             to: '2001-01-01',
         });
-        yield Promise.resolve<Assembly>({
+        yield Promise.resolve<Messages.Assembly>({
             assembly_id: 20,
             from: '2001-01-01',
             to: '2001-01-01',
@@ -133,19 +134,19 @@ Deno.test("MinisterSitting.handle", async () => {
 
 Deno.test("MinisterSitting.handle | no constituency, no party", async () => {
     function* generateResponse() {
-        yield Promise.resolve<Assembly>({
+        yield Promise.resolve<Messages.Assembly>({
             assembly_id: 2,
             from: '2001-01-01',
             to: '2001-01-01',
         });
-        yield Promise.resolve<Congressman>({
+        yield Promise.resolve<Messages.Congressman>({
             congressman_id: 3,
             name: 'congressman_name',
             abbreviation: 'abbr',
             birth: '2001-01-01',
             death: null
         });
-        yield Promise.resolve<Ministry>({
+        yield Promise.resolve<Messages.Ministry>({
             ministry_id: 4,
             name: 'name',
             abbr_short: 'abbr_short',
@@ -153,13 +154,13 @@ Deno.test("MinisterSitting.handle | no constituency, no party", async () => {
             first: 10,
             last: 20,
         });
-        yield Promise.resolve<Constituency[]>([]);
-        yield Promise.resolve<Assembly>({
+        yield Promise.resolve<Messages.Constituency[]>([]);
+        yield Promise.resolve<Messages.Assembly>({
             assembly_id: 10,
             from: '2001-01-01',
             to: '2001-01-01',
         });
-        yield Promise.resolve<Assembly>({
+        yield Promise.resolve<Messages.Assembly>({
             assembly_id: 20,
             from: '2001-01-01',
             to: '2001-01-01',
@@ -231,19 +232,19 @@ Deno.test("MinisterSitting.handle | no constituency, no party", async () => {
 
 Deno.test("MinisterSitting.handle | no ministry assembly", async () => {
     function* generateResponse() {
-        yield Promise.resolve<Assembly>({
+        yield Promise.resolve<Messages.Assembly>({
             assembly_id: 2,
             from: '2001-01-01',
             to: '2001-01-01',
         });
-        yield Promise.resolve<Congressman>({
+        yield Promise.resolve<Messages.Congressman>({
             congressman_id: 3,
             name: 'congressman_name',
             abbreviation: 'abbr',
             birth: '2001-01-01',
             death: null
         });
-        yield Promise.resolve<Ministry>({
+        yield Promise.resolve<Messages.Ministry>({
             ministry_id: 4,
             name: 'name',
             abbr_short: 'abbr_short',
@@ -251,14 +252,14 @@ Deno.test("MinisterSitting.handle | no ministry assembly", async () => {
             first: null,
             last: null,
         });
-        yield Promise.resolve<Constituency[]>([{
+        yield Promise.resolve<Messages.Constituency[]>([{
             constituency_id: 3,
             abbr_long: 'abbr_long',
             abbr_short: 'abbr_short',
             description: null,
             name: 'constituency_name'
         }]);
-        yield Promise.resolve<Party>({
+        yield Promise.resolve<Messages.Party>({
             party_id: 5,
             name: 'party_name',
             abbr_long: 'abbr_long',

@@ -1,11 +1,11 @@
 import type {
-    Inflation,
-    InflationPayload,
     Message,
     Source,
-    Store
+    Store,
+    Messages,
+    Payload
 } from '../index.d.ts';
 
-export async function handle(data: Message<Inflation>, _source: Source, store: Store): Promise<void> {
-    await store.put<InflationPayload>(`/verdbolga/${data.body.id}`, data.body);
+export async function handle(data: Message<Messages.Inflation>, _source: Source, store: Store): Promise<void> {
+    await store.put<Payload.Inflation>(`/verdbolga/${data.body.id}`, data.body);
 }

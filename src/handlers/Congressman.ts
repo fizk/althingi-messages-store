@@ -1,11 +1,11 @@
 import type {
-    Congressman,
-    CongressmanPayload,
     Message,
     Source,
-    Store
+    Store,
+    Messages,
+    Payload
 } from '../index.d.ts';
 
-export async function handle(data: Message<Congressman>, _source: Source, store: Store): Promise<void> {
-    await store.put<CongressmanPayload>(`/thingmenn/${data.body.congressman_id}`, data.body);
+export async function handle(data: Message<Messages.Congressman>, _source: Source, store: Store): Promise<void> {
+    await store.put<Payload.Congressman>(`/thingmenn/${data.body.congressman_id}`, data.body);
 }

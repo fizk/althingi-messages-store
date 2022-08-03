@@ -1,35 +1,32 @@
 import { assertEquals } from "https://deno.land/std@0.128.0/testing/asserts.ts";
 import { handle } from '../../src/handlers/CongressmanSitting.ts'
 import type {
-    Assembly,
-    Congressman,
-    Constituency,
-    Party
+    Messages
 } from '../../src/index.d.ts';
 
 
 Deno.test("CongressmanSitting.handle", async () => {
     function* generateResponse() {
-        yield Promise.resolve<Assembly>({
+        yield Promise.resolve<Messages.Assembly>({
             assembly_id: 4,
             from: '2001-01-01',
             to: '2001-01-01',
         });
-        yield Promise.resolve<Congressman>({
+        yield Promise.resolve<Messages.Congressman>({
             congressman_id: 2,
             name: 'congressman_name',
             abbreviation: 'abbr',
             birth: '2001-01-01',
             death: null
         });
-        yield Promise.resolve<Constituency>({
+        yield Promise.resolve<Messages.Constituency>({
             constituency_id: 3,
             abbr_long: 'abbr_long',
             abbr_short: 'abbr_short',
             description: null,
             name: 'constituency_name'
         });
-        yield Promise.resolve<Party>({
+        yield Promise.resolve<Messages.Party>({
             party_id: 5,
             name: 'party_name',
             abbr_long: 'abbr_long',
@@ -102,19 +99,19 @@ Deno.test("CongressmanSitting.handle", async () => {
 
 Deno.test("CongressmanSitting.handle | No party", async () => {
     function* generateResponse() {
-        yield Promise.resolve<Assembly>({
+        yield Promise.resolve<Messages.Assembly>({
             assembly_id: 4,
             from: '2001-01-01',
             to: '2001-01-01',
         });
-        yield Promise.resolve<Congressman>({
+        yield Promise.resolve<Messages.Congressman>({
             congressman_id: 2,
             name: 'congressman_name',
             abbreviation: 'abbr',
             birth: '2001-01-01',
             death: null
         });
-        yield Promise.resolve<Constituency>({
+        yield Promise.resolve<Messages.Constituency>({
             constituency_id: 3,
             abbr_long: 'abbr_long',
             abbr_short: 'abbr_short',

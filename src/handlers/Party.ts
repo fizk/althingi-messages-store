@@ -1,11 +1,11 @@
 import type {
-    Party,
-    PartyPayload,
     Message,
     Store,
-    Source
+    Source,
+    Messages,
+    Payload
 } from '../index.d.ts';
 
-export async function handle(data: Message<Party>, _source: Source, store: Store): Promise<void> {
-    await store.put<PartyPayload>(`/thingflokkar/${data.body.party_id}`, data.body);
+export async function handle(data: Message<Messages.Party>, _source: Source, store: Store): Promise<void> {
+    await store.put<Payload.Party>(`/thingflokkar/${data.body.party_id}`, data.body);
 }

@@ -1,24 +1,20 @@
 import type {
-    CongressmanSitting,
-    CongressmanSittingPayload,
-    Assembly,
-    Congressman,
-    Constituency,
-    Party,
     Message,
     Source,
-    Store
+    Store,
+    Messages,
+    Payload
 } from '../index.d.ts';
 
-export async function handle(data: Message<CongressmanSitting>, source: Source, store: Store): Promise<void> {
+export async function handle(data: Message<Messages.CongressmanSitting>, source: Source, store: Store): Promise<void> {
     const {assembly_id, congressman_id, constituency_id, party_id, ...body} = data.body;
     const [assembly, congressman, constituency, party] = await Promise.all([
-        source.get<Assembly>(`/loggjafarthing/${assembly_id}`),
-        source.get<Congressman>(`/thingmenn/${congressman_id}`),
-        source.get<Constituency>(`/kjordaemi/${constituency_id}`),
-        party_id ? source.get<Party>(`/thingflokkar/${party_id}`) : Promise.resolve(null),
+        source.get<Messages.Assembly>(`/loggjafarthing/${assembly_id}`),
+        source.get<Messages.Congressman>(`/thingmenn/${congressman_id}`),
+        source.get<Messages.Constituency>(`/kjordaemi/${constituency_id}`),
+        party_id ? source.get<Messages.Party>(`/thingflokkar/${party_id}`) : Promise.resolve(null),
     ]);
-    await store.put<CongressmanSittingPayload>(`/thingseta/${body.session_id}`, {
+    await store.put<Payload.CongressmanSitting>(`/thingseta/${body.session_id}`, {
         ...body,
         assembly: assembly!,
         congressman: congressman!,

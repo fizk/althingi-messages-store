@@ -10,49 +10,51 @@ import * as CongressmanSittingHandler from './handlers/CongressmanSitting.ts';
 import * as CommitteeSittingHandler from './handlers/CommitteeSitting.ts';
 import * as MinisterSittingHandler from './handlers/MinisterSitting.ts';
 import * as PresidentSittingHandler from './handlers/PresidentSitting.ts';
-import type {
-    Assembly,
-    Committee,
-    CommitteeSitting,
-    Congressman,
-    CongressmanSitting,
-    Constituency,
-    Ministry,
-    MinisterSitting,
-    Inflation,
-    Party,
-    PresidentSitting,
-} from './index.d.ts';
+import * as IssueHandler from './handlers/Issue.ts';
+import * as PlenaryAgendaHandler from './handlers/PlenaryAgenda.ts';
+import * as PlenaryHandler from './handlers/Plenary.ts';
+import { Messages } from './index.d.ts';
 
-runner<Assembly>('assembly.add', 'AssemblyHandler.add', AssemblyHandler.handle);
-runner<Assembly>('assembly.update', 'AssemblyHandler.update', AssemblyHandler.handle);
+runner<Messages.Assembly>('assembly.add', 'AssemblyHandler.add', AssemblyHandler.handle);
 
-runner<Ministry>('ministry.add', 'MinistryHandler.add', MinistryHandler.handle);
-runner<Ministry>('ministry.update', 'MinistryHandler.update', MinistryHandler.handle);
+runner<Messages.Assembly>('assembly.add', 'AssemblyHandler.add', AssemblyHandler.handle);
+runner<Messages.Assembly>('assembly.update', 'AssemblyHandler.update', AssemblyHandler.handle);
 
-runner<Party>('party.add', 'PartyHandler.add', PartyHandler.handle);
-runner<Party>('party.update', 'PartyHandler.update', PartyHandler.handle);
+runner<Messages.Ministry>('ministry.add', 'MinistryHandler.add', MinistryHandler.handle);
+runner<Messages.Ministry>('ministry.update', 'MinistryHandler.update', MinistryHandler.handle);
 
-runner<Constituency>('constituency.add', 'ConstituencyHandler.add', ConstituencyHandler.handle);
-runner<Constituency>('constituency.update', 'ConstituencyHandler.update', ConstituencyHandler.handle);
+runner<Messages.Party>('party.add', 'PartyHandler.add', PartyHandler.handle);
+runner<Messages.Party>('party.update', 'PartyHandler.update', PartyHandler.handle);
 
-runner<Committee>('committee.add', 'CommitteeHandler.add', CommitteeHandler.handle);
-runner<Committee>('committee.update', 'CommitteeHandler.update', CommitteeHandler.handle);
+runner<Messages.Constituency>('constituency.add', 'ConstituencyHandler.add', ConstituencyHandler.handle);
+runner<Messages.Constituency>('constituency.update', 'ConstituencyHandler.update', ConstituencyHandler.handle);
 
-runner<Inflation>('inflation.add', 'InflationHandler.add', InflationHandler.handle);
-runner<Inflation>('inflation.update', 'InflationHandler.update', InflationHandler.handle);
+runner<Messages.Committee>('committee.add', 'CommitteeHandler.add', CommitteeHandler.handle);
+runner<Messages.Committee>('committee.update', 'CommitteeHandler.update', CommitteeHandler.handle);
 
-runner<Congressman>('congressman.add', 'CongressmanHandler.add', CongressmanHandler.handle);
-runner<Congressman>('congressman.update', 'CongressmanHandler.update', CongressmanHandler.handle);
+runner<Messages.Inflation>('inflation.add', 'InflationHandler.add', InflationHandler.handle);
+runner<Messages.Inflation>('inflation.update', 'InflationHandler.update', InflationHandler.handle);
 
-runner<CongressmanSitting>('session.add', 'CongressmanSittingHandler.add', CongressmanSittingHandler.handle);
-runner<CongressmanSitting>('session.update', 'CongressmanSittingHandler.update', CongressmanSittingHandler.handle);
+runner<Messages.Congressman>('congressman.add', 'CongressmanHandler.add', CongressmanHandler.handle);
+runner<Messages.Congressman>('congressman.update', 'CongressmanHandler.update', CongressmanHandler.handle);
 
-runner<CommitteeSitting>('committee-sitting.add', 'CommitteeSittingHandler.add', CommitteeSittingHandler.handle);
-runner<CommitteeSitting>('committee-sitting.update', 'CommitteeSittingHandler.update', CommitteeSittingHandler.handle);
+runner<Messages.CongressmanSitting>('session.add', 'CongressmanSittingHandler.add', CongressmanSittingHandler.handle);
+runner<Messages.CongressmanSitting>('session.update', 'CongressmanSittingHandler.update', CongressmanSittingHandler.handle);
 
-runner<MinisterSitting>('minister-sitting.add', 'MinisterSittingHandler.add', MinisterSittingHandler.handle);
-runner<MinisterSitting>('minister-sitting.update', 'MinisterSittingHandler.update', MinisterSittingHandler.handle);
+runner<Messages.CommitteeSitting>('committee-sitting.add', 'CommitteeSittingHandler.add', CommitteeSittingHandler.handle);
+runner<Messages.CommitteeSitting>('committee-sitting.update', 'CommitteeSittingHandler.update', CommitteeSittingHandler.handle);
 
-runner<PresidentSitting>('president.add', 'PresidentSittingHandler.add', PresidentSittingHandler.handle);
-runner<PresidentSitting>('president.update', 'PresidentSittingHandler.update', PresidentSittingHandler.handle);
+runner<Messages.MinisterSitting>('minister-sitting.add', 'MinisterSittingHandler.add', MinisterSittingHandler.handle);
+runner<Messages.MinisterSitting>('minister-sitting.update', 'MinisterSittingHandler.update', MinisterSittingHandler.handle);
+
+runner<Messages.PresidentSitting>('president.add', 'PresidentSittingHandler.add', PresidentSittingHandler.handle);
+runner<Messages.PresidentSitting>('president.update', 'PresidentSittingHandler.update', PresidentSittingHandler.handle);
+
+runner<Messages.Issue>('issue.add', 'IssueHandler.add', IssueHandler.handle);
+runner<Messages.Issue>('issue.update', 'IssueHandler.update', IssueHandler.handle);
+
+runner<Messages.PlenaryAgenda>('issue.add', 'PlenaryAgendaHandler.add', PlenaryAgendaHandler.handle);
+runner<Messages.PlenaryAgenda>('issue.update', 'PlenaryAgendaHandler.update', PlenaryAgendaHandler.handle);
+
+runner<Messages.Plenary>('issue.add', 'PlenaryHandler.add', PlenaryHandler.handle);
+runner<Messages.Plenary>('issue.update', 'PlenaryHandler.update', PlenaryHandler.handle);

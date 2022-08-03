@@ -11,12 +11,15 @@ services:
     environment:
       - QUEUE_HOST=kafka
       - QUEUE_PORT=9092
-      - SOURCE_PATH=http://source:80
-      - STORE_PATH=http://store:80
+      - SOURCE_PATH=http://${DOCKER_GATEWAY_HOST:-host.docker.internal}:7070
+      - STORE_PATH=http://${DOCKER_GATEWAY_HOST:-host.docker.internal}:8083
+    depends_on:
+        - zookeeper
+        - kafka
     volumes:
       - ./src:/var/src
       - ./test:/var/test
-    command: bash -c "denon run --allow-net --allow-env --unstable /var/src/index.ts"
+    command: bash -c "./bin/dev.sh"
 
   test:
     container_name: local-althingi-messages-store-test
@@ -29,7 +32,7 @@ services:
       - QUEUE_HOST=kafka
       - QUEUE_PORT=9092
       - SOURCE_PATH=http://source:80
-      - STORE_PATH=http://store:80
+      - STORE_PATH=http://store:8083
     volumes:
       - ./src:/var/src
       - ./test:/var/test
@@ -46,7 +49,7 @@ services:
     container_name: local-althingi-messages-store-kafka
     image: wurstmeister/kafka:2.13-2.8.1
     ports:
-      - "9092"
+      - "9092:9092"
     environment:
       DOCKER_API_VERSION: 1.22
       KAFKA_ADVERTISED_HOST_NAME: host.docker.internal
