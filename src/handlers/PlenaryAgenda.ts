@@ -65,7 +65,10 @@ export async function handle(data: Message<Messages.PlenaryAgenda>, source: Sour
     await store.put<Payload.PlenaryAgenda>(`/loggjafarthing/${assembly_id}/thingfundir/${plenary_id}/lidir/${data.body.item_id}`, {
         ...body,
         plenary: plenary!,
-        issue: issue!,
+        issue: {
+            ...issue!,
+            category: issue?.category?.toLowerCase() || 'a'
+        },
         assembly: assembly!,
 
         posed: posed_member,

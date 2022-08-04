@@ -7,7 +7,7 @@ export const SourceClient: Source = {
     get: async <T>(url: string): Promise<T | null> => {
         const response = await fetch(`${sourcePath}${url}`);
 
-        console.log(`GET ${storePath}${url} - ${response.status}`);
+        console.log(`GET ${sourcePath}${url} - ${response.status}`);
 
         if (response.status === 200) {
             return response.json();

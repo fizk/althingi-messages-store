@@ -8,7 +8,7 @@ import type {
 
 export async function handle(data: Message<Messages.Plenary>, source: Source, store: Store): Promise<void> {
     const { assembly_id, ...body } = data.body;
-    const assembly = await source.get<Messages.Assembly>(`loggjafarthing/${assembly_id}`);
+    const assembly = await source.get<Messages.Assembly>(`/loggjafarthing/${assembly_id}`);
 
     await store.put<Payload.Plenary>(`/loggjafarthing/${assembly_id}/thingfundir/${data.body.plenary_id}`, {
         ...body,

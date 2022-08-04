@@ -16,8 +16,6 @@ import * as PlenaryHandler from './handlers/Plenary.ts';
 import { Messages } from './index.d.ts';
 
 runner<Messages.Assembly>('assembly.add', 'AssemblyHandler.add', AssemblyHandler.handle);
-
-runner<Messages.Assembly>('assembly.add', 'AssemblyHandler.add', AssemblyHandler.handle);
 runner<Messages.Assembly>('assembly.update', 'AssemblyHandler.update', AssemblyHandler.handle);
 
 runner<Messages.Ministry>('ministry.add', 'MinistryHandler.add', MinistryHandler.handle);
@@ -53,8 +51,8 @@ runner<Messages.PresidentSitting>('president.update', 'PresidentSittingHandler.u
 runner<Messages.Issue>('issue.add', 'IssueHandler.add', IssueHandler.handle);
 runner<Messages.Issue>('issue.update', 'IssueHandler.update', IssueHandler.handle);
 
-runner<Messages.PlenaryAgenda>('issue.add', 'PlenaryAgendaHandler.add', PlenaryAgendaHandler.handle);
-runner<Messages.PlenaryAgenda>('issue.update', 'PlenaryAgendaHandler.update', PlenaryAgendaHandler.handle);
+runner<Messages.PlenaryAgenda>('plenary-agenda.add', 'PlenaryAgendaHandler.add', PlenaryAgendaHandler.handle);
+runner<Messages.PlenaryAgenda>('plenary-agenda.update', 'PlenaryAgendaHandler.update', PlenaryAgendaHandler.handle);
 
-runner<Messages.Plenary>('issue.add', 'PlenaryHandler.add', PlenaryHandler.handle);
-runner<Messages.Plenary>('issue.update', 'PlenaryHandler.update', PlenaryHandler.handle);
+runner<Messages.Plenary>('plenary.add', 'PlenaryHandler.add', PlenaryHandler.handle);
+runner<Messages.Plenary>('plenary.update', 'PlenaryHandler.update', PlenaryHandler.handle);

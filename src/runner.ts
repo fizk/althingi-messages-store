@@ -37,6 +37,7 @@ const ConsoleLogger = (_logLevel: number) => ({ namespace, level, log }: {
 //declare host and name
 const port = Deno.env.get("QUEUE_PORT");
 const host = Deno.env.get("QUEUE_HOST");
+const clientId = Deno.env.get("QUEUE_CLIENT_ID");
 
 const logLevel = LEVELS.WARN;
 
@@ -45,8 +46,8 @@ const kafka = new Kafka({
     logLevel,
     logCreator: ConsoleLogger,
     brokers: [`${host}:${port}`],
-    clientId: 'store-messanger-consumer',
-})
+    clientId: clientId,
+});
 
 export async function runner<T>(
     topic: string,

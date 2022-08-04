@@ -9,6 +9,7 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
+      - QUEUE_CLIENT_ID=store-messanger-consumer
       - QUEUE_HOST=kafka
       - QUEUE_PORT=9092
       - SOURCE_PATH=http://${DOCKER_GATEWAY_HOST:-host.docker.internal}:7070
