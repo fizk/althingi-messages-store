@@ -10,8 +10,7 @@ export async function handle(data: Message<Messages.Plenary>, source: Source, st
     const { assembly_id, ...body } = data.body;
     const assembly = await source.get<Messages.Assembly>(`loggjafarthing/${assembly_id}`);
 
-    // @todo the PUT URL
-    await store.put<Payload.Plenary>(`/loggjafarthing/${data.body.plenary_id}`, {
+    await store.put<Payload.Plenary>(`/loggjafarthing/${assembly_id}/thingfundir/${data.body.plenary_id}`, {
         ...body,
         assembly: assembly!
     });

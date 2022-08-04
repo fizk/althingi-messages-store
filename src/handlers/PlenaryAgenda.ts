@@ -62,8 +62,7 @@ export async function handle(data: Message<Messages.PlenaryAgenda>, source: Sour
         instigator_id ? source.get<Messages.Constituency[]>(`/thingmenn/${instigator_id}/kjordaemi?dags=${plenary?.from}`) : Promise.resolve([]),
     ]);
 
-    // @todo the PUT URL
-    await store.put<Payload.PlenaryAgenda>(`/loggjafarthing/${data.body.assembly_id}`, {
+    await store.put<Payload.PlenaryAgenda>(`/loggjafarthing/${assembly_id}/thingfundir/${plenary_id}/lidir/${data.body.item_id}`, {
         ...body,
         plenary: plenary!,
         issue: issue!,

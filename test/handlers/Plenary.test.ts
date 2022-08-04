@@ -43,10 +43,9 @@ Deno.test("Plenary.handle", async () => {
             return response.next().value as Promise<T>;
         }
     }, {
-        put: (_url: string, data: unknown) => {
+        put: (url: string, data: unknown) => {
             assertEquals(data, expected);
-            // @todo the PUT URL
-            // assertEquals(url, '/loggjafarthing/1')
+            assertEquals(url, '/loggjafarthing/2/thingfundir/1')
             return Promise.resolve(200)
         }
     });

@@ -293,10 +293,9 @@ Deno.test("PlenaryAgenda.handle", async () => {
                 return response.next().value as Promise<T>;
             }
         }, {
-        put: (_url: string, data: unknown) => {
+        put: (url: string, data: unknown) => {
             assertEquals(data, expected);
-            // @todo the PUT URL
-            // assertEquals(url, '/nefndarseta/1');
+            assertEquals(url, '/loggjafarthing/4/thingfundir/2/lidir/1');
             return Promise.resolve(200);
         }
     });
@@ -429,10 +428,9 @@ Deno.test("PlenaryAgenda.handle | missing values", async () => {
                 return response.next().value as Promise<T>;
             }
         }, {
-        put: (_url: string, data: unknown) => {
+        put: (url: string, data: unknown) => {
             assertEquals(data, expected);
-            // @todo the PUT URL
-            // assertEquals(url, '/nefndarseta/1');
+            assertEquals(url, '/loggjafarthing/4/thingfundir/2/lidir/1');
             return Promise.resolve(200);
         }
     });

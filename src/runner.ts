@@ -1,4 +1,3 @@
-//deno-lint-ignore-file require-await
 import { Buffer } from 'https://deno.land/std@0.110.0/node/buffer.ts';
 import { Kafka } from 'https://deno.land/x/kafkasaur@v0.0.7/index.ts';
 import type { Message, Source, Store } from './index.d.ts';
