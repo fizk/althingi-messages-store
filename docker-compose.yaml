@@ -3,6 +3,8 @@ version: '3'
 services:
   run:
     container_name: local-althingi-messages-store-run
+    labels:
+      - althingi_service=messages-source
     build:
       args:
         - ENV=development
@@ -21,6 +23,7 @@ services:
       - ./src:/var/src
       - ./test:/var/test
     command: bash -c "./bin/dev.sh"
+    # command: bash -c "./bin/start.sh"
 
   test:
     container_name: local-althingi-messages-store-test
@@ -56,7 +59,7 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: host.docker.internal
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - kafka-volume:/var/run/docker.sock
     restart: unless-stopped
 
   #
@@ -79,68 +82,5 @@ services:
     environment:
         - KAFKA_CLUSTERS_0_NAME=local
         - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
-
-
-
-
-  source:
-    container_name: local-althingi-messages-store-althingi-source
-    image: einarvalur/althingi-source:latest
-    labels:
-        - althingi_service=source
-    restart: on-failure
-    environment:
-      - DB_HOST=source-db
-      - DB_PORT=3306
-      - DB_NAME=althingi
-      - DB_USER=root
-      - DB_PASSWORD=example
-      - LOG_PATH=php://stdout
-      - BROKER=none
-      - BROKER_HOST=kafka:9092
-      - QUEUE_FORCED=false
-      # - DOCUMENT_SERVER=
-      # - DOCUMENT_DEFINITION=
-      # - INDEXER_STALL_TIME=
-    depends_on:
-      - source-db
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "200k"
-        max-file: "5"
-
-  source-db:
-    container_name: local-althingi-messages-store-althingi-source-db
-    image: einarvalur/althingi-source-db:latest
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: example
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "200k"
-        max-file: "5"
-
-  store:
-    container_name: local-althingi-messages-store-althingi-store
-    image: einarvalur/althingi-store:latest
-    ports:
-      - 9090:80
-    environment:
-      - STORE_DB_HOST=store-db
-      - STORE_DB_USER=root
-      - STORE_DB_PASSWORD=example
-    depends_on:
-      - store-db
-
-  store-db:
-    container_name: local-althingi-messages-store-althingi-store-db
-    image: mongo:5.0.6-focal
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-    ports:
-      - 27017:27017
+volumes:
+    kafka-volume:

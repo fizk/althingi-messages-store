@@ -6,7 +6,7 @@ import type {
     Payload
 } from '../index.d.ts';
 
-export async function handle(data: Message<Messages.PlenaryAgenda>, source: Source, store: Store): Promise<void> {
+export async function add(data: Message<Messages.PlenaryAgenda>, source: Source, store: Store): Promise<void> {
 
     const {
         plenary_id,

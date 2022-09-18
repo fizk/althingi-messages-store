@@ -1,5 +1,5 @@
 import { assertEquals } from "https://deno.land/std@0.128.0/testing/asserts.ts";
-import { handle } from '../../src/handlers/CommitteeSitting.ts'
+import { add } from '../../src/handlers/CommitteeSitting.ts'
 import type {
     Messages,
 } from '../../src/index.d.ts';
@@ -55,7 +55,7 @@ Deno.test("CommitteeSitting.handle", async () => {
     }
     const response = generateResponse();
 
-    await handle({
+    await add({
         id: 1,
         index: 'committee-sitting.add',
         body: {
@@ -172,7 +172,7 @@ Deno.test("CommitteeSitting.handle | only required", async () => {
     }
     const response = generateResponse();
 
-    await handle({
+    await add({
         id: 1,
         index: 'committee-sitting.add',
         body: {
@@ -269,7 +269,7 @@ Deno.test("CommitteeSitting.handle | no party or constituency", async () => {
     }
     const response = generateResponse();
 
-    await handle({
+    await add({
         id: 1,
         index: 'committee-sitting.add',
         body: {

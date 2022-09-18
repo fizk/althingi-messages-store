@@ -1,5 +1,5 @@
 import { assertEquals } from "https://deno.land/std@0.128.0/testing/asserts.ts";
-import { handle } from '../../src/handlers/Plenary.ts';
+import { add } from '../../src/handlers/Plenary.ts';
 import type { Messages, } from '../../src/index.d.ts';
 
 Deno.test("Plenary.handle", async () => {
@@ -38,7 +38,7 @@ Deno.test("Plenary.handle", async () => {
 
     const response = generateResponse();
 
-    await handle(input, {
+    await add(input, {
         get: <T>(_url: string): Promise<T> => {
             return response.next().value as Promise<T>;
         }

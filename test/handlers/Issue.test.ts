@@ -1,5 +1,5 @@
 import { assertEquals } from "https://deno.land/std@0.128.0/testing/asserts.ts";
-import { handle } from '../../src/handlers/Issue.ts';
+import { add } from '../../src/handlers/Issue.ts';
 import type { Messages, } from '../../src/index.d.ts';
 
 Deno.test("Issue.handle", async () => {
@@ -41,7 +41,7 @@ Deno.test("Issue.handle", async () => {
             abbreviation: 'abbreviation',
         },
         issue_id: 3,
-        category: 'A',
+        category: 'a',
         name: 'Issue name',
         sub_name: null,
         type: null,
@@ -55,6 +55,9 @@ Deno.test("Issue.handle", async () => {
         costs_and_revenues: null,
         deliveries: null,
         additional_information: null,
+        content_categories: [],
+        content_super_categories: [],
+        proponents: []
     }
 
     function* generateResponse() {
@@ -75,7 +78,7 @@ Deno.test("Issue.handle", async () => {
     }
     const response = generateResponse();
 
-    await handle(input,
+    await add(input,
     {
         get: <T>(_url: string): Promise<T> => {
             return response.next().value as Promise<T>;

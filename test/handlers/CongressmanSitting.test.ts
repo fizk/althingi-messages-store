@@ -1,5 +1,5 @@
 import { assertEquals } from "https://deno.land/std@0.128.0/testing/asserts.ts";
-import { handle } from '../../src/handlers/CongressmanSitting.ts'
+import { add } from '../../src/handlers/CongressmanSitting.ts'
 import type {
     Messages
 } from '../../src/index.d.ts';
@@ -38,7 +38,7 @@ Deno.test("CongressmanSitting.handle", async () => {
     }
     const response = generateResponse();
 
-    await handle({
+    await add({
         id: 1,
         index: 'congressman-sitting.add',
         body: {
@@ -123,7 +123,7 @@ Deno.test("CongressmanSitting.handle | No party", async () => {
     }
     const response = generateResponse();
 
-    await handle({
+    await add({
         id: 1,
         index: 'congressman-sitting.add',
         body: {

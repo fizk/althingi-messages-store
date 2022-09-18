@@ -6,7 +6,7 @@ import type {
     Payload
 } from '../index.d.ts';
 
-export async function handle(data: Message<Messages.PresidentSitting>, source: Source, store: Store): Promise<void> {
+export async function add(data: Message<Messages.PresidentSitting>, source: Source, store: Store): Promise<void> {
     const { assembly_id, congressman_id, ...body } = data.body;
 
     const [assembly, congressman, parties, constituencies] = await Promise.all([

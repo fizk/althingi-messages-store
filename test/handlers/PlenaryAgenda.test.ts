@@ -1,5 +1,5 @@
 import { assertEquals } from "https://deno.land/std@0.128.0/testing/asserts.ts";
-import { handle } from '../../src/handlers/PlenaryAgenda.ts';
+import { add } from '../../src/handlers/PlenaryAgenda.ts';
 import type { Messages, } from '../../src/index.d.ts';
 
 Deno.test("PlenaryAgenda.handle", async () => {
@@ -42,7 +42,7 @@ Deno.test("PlenaryAgenda.handle", async () => {
             issue_id: 3,
             assembly_id: 4,
             congressman_id: 100,
-            category: 'A',
+            category: 'a',
             name: null,
             sub_name: null,
             type: null,
@@ -287,7 +287,7 @@ Deno.test("PlenaryAgenda.handle", async () => {
 
     const response = generateResponse();
 
-    await handle(input,
+    await add(input,
         {
             get: <T>(_url: string): Promise<T> => {
                 return response.next().value as Promise<T>;
@@ -341,7 +341,7 @@ Deno.test("PlenaryAgenda.handle | missing values", async () => {
             issue_id: 3,
             assembly_id: 4,
             congressman_id: 100,
-            category: 'A',
+            category: 'a',
             name: null,
             sub_name: null,
             type: null,
@@ -422,7 +422,7 @@ Deno.test("PlenaryAgenda.handle | missing values", async () => {
 
     const response = generateResponse();
 
-    await handle(input,
+    await add(input,
         {
             get: <T>(_url: string): Promise<T> => {
                 return response.next().value as Promise<T>;

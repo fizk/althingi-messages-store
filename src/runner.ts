@@ -2,44 +2,14 @@ import { Buffer } from 'https://deno.land/std@0.110.0/node/buffer.ts';
 import { Kafka } from 'https://deno.land/x/kafkasaur@v0.0.7/index.ts';
 import type { Message, Source, Store } from './index.d.ts';
 import { SourceClient, StoreClient } from './clients.ts';
+import { ConsoleLogger, LEVELS, logLevel } from './logger.ts'
 
-const LEVELS = {
-    NOTHING: 0,
-    ERROR: 1,
-    WARN: 2,
-    INFO: 4,
-    DEMO: 5,
-    DEBUG: 6
-};
-
-const ConsoleLogger = (_logLevel: number) => ({ namespace, level, log }: {
-    namespace: string,
-    level: number,
-    label: string,
-    log: Record<string, unknown>
-}) => {
-    const { message, ...extra } = log;
-    const payload = {
-        section_name: namespace,
-        request_method: message,
-        response_status: level,
-        request_headers: extra.headers || {},
-        request_uri: '',
-        response_headers: {},
-        error_file: null,
-        error_message: null,
-        error_trace: extra || null
-    };
-
-    console.log(JSON.stringify(payload));
-}
 
 //declare host and name
 const port = Deno.env.get("QUEUE_PORT");
 const host = Deno.env.get("QUEUE_HOST");
 const clientId = Deno.env.get("QUEUE_CLIENT_ID");
-
-const logLevel = LEVELS.WARN;
+const log = ConsoleLogger(logLevel);
 
 //intialize broker
 const kafka = new Kafka({
@@ -57,6 +27,24 @@ export async function runner<T>(
     try {
         const consumer = kafka.consumer({ groupId: group })
         await consumer.connect();
+
+        consumer.on(consumer.events.HEARTBEAT, event => logEvent(LEVELS.DEBUG,'DEBUG','HEARTBEAT', event));
+        // consumer.on(consumer.events.COMMIT_OFFSETS, event => logEvent(LEVELS.DEBUG,'DEBUG', 'COMMIT_OFFSETS', event));
+        // consumer.on(consumer.events.GROUP_JOIN, event => logEvent(LEVELS.DEBUG,'DEBUG', 'GROUP_JOIN', event));
+        // consumer.on(consumer.events.FETCH, event => logEvent(LEVELS.DEBUG,'DEBUG', 'FETCH', event));
+        // consumer.on(consumer.events.FETCH_START, event => logEvent(LEVELS.DEBUG,'DEBUG', 'FETCH_START', event));
+        // consumer.on(consumer.events.START_BATCH_PROCESS, event => logEvent(LEVELS.DEBUG,'DEBUG', 'START_BATCH_PROCESS', event));
+        // consumer.on(consumer.events.END_BATCH_PROCESS, event => logEvent(LEVELS.DEBUG,'DEBUG', 'END_BATCH_PROCESS', event));
+        consumer.on(consumer.events.CONNECT, event => logEvent(LEVELS.INFO,'INFO', 'CONNECT', event));
+        consumer.on(consumer.events.DISCONNECT, event => logEvent(LEVELS.INFO,'INFO', 'DISCONNECT', event));
+        consumer.on(consumer.events.STOP, event => logEvent(LEVELS.INFO,'INFO', 'STOP', event));
+        consumer.on(consumer.events.CRASH, event => logEvent(LEVELS.ERROR,'ERROR', 'CRASH', event));
+        // consumer.on(consumer.events.REBALANCING, event => logEvent(LEVELS.DEBUG,'DEBUG', 'REBALANCING', event));
+        // consumer.on(consumer.events.RECEIVED_UNSUBSCRIBED_TOPICS, event => logEvent(LEVELS.DEBUG,'DEBUG', 'RECEIVED_UNSUBSCRIBED_TOPICS', event));
+        // consumer.on(consumer.events.REQUEST, event => logEvent(LEVELS.DEBUG,'DEBUG', 'REQUEST', event));
+        // consumer.on(consumer.events.REQUEST_TIMEOUT, event => logEvent(LEVELS.ERROR,'ERROR', 'REQUEST_TIMEOUT', event));
+        // consumer.on(consumer.events.REQUEST_QUEUE_SIZE, event => logEvent(LEVELS.DEBUG,'DEBUG', 'REQUEST_QUEUE_SIZE', event));
+
         await consumer.subscribe({ topic, fromBeginning: false })
         await consumer.run({
             eachMessage: async (payload) => {
@@ -64,40 +52,54 @@ export async function runner<T>(
                     const decoder = new TextDecoder();
                     const response = decoder.decode(payload.message.value as Buffer);
                     const message: Message<T> = JSON.parse(response);
+
                     await callback(message, SourceClient, StoreClient);
-                    ConsoleLogger(logLevel)({
-                        namespace: 'Request',
-                        label: 'DEBUG',
-                        level: LEVELS.DEBUG,
+                    log({
+                        namespace: 'Subscribe',
+                        label: 'INFO',
+                        level: LEVELS.INFO,
                         log: {
-                            message: `${group}:${topic}`,
-                            headers: {topic, group}
+                            message: response,
+                            topic: `${group}:${topic}`,
                         }
                     });
                 } catch (e) {
                     const decoder = new TextDecoder();
-                    ConsoleLogger(logLevel)({
-                        namespace: 'Request',
+                    log({
+                        namespace: 'Subscribe',
                         label: 'ERROR',
                         level: LEVELS.ERROR,
                         log: {
-                            message: `${e.message} | ${group}:${topic}`,
-                            headers: { topic, group },
-                            payload: JSON.parse(decoder.decode(payload.message.value as Buffer))
+                            message: decoder.decode(payload.message.value as Buffer),
+                            topic: `${group}:${topic}`,
+                            error: `${e.toString()} | ${e.message}`,
+                            error_stack: e.stack || '',
+                            error_location: `${e.fileName || ''} - ${e.lineNumber}:${e.columnNumber}`
                         }
                     });
                 }
             }
         });
     } catch (e) {
-        ConsoleLogger(logLevel)({
-            namespace: 'Consumer',
+        log({
+            namespace: 'Subscribe',
             label: 'ERROR',
             level: LEVELS.ERROR,
             log: {
-                message: `${e.message} | ${group}:${topic}`,
-                headers: { topic, group },
+                message: null,
+                topic: `${group}:${topic}`,
+                error: `${e.toString()} | ${e.message}`,
+                error_stack: e.stack || '',
+                error_location: `${e.fileName || ''} - ${e.lineNumber}:${e.columnNumber}`
             }
         });
     }
 }
+
+const logEvent = (level: number, label: string, message: string, event: unknown) => log({
+        namespace: 'Event',
+        label,
+        level,
+        log: {message,event,}
+    });
+

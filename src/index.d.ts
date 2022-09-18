@@ -25,6 +25,18 @@ export namespace Messages {
         to: Maybe<string>
     }
 
+    export interface Category {
+        category_id: number;
+        super_category_id: Maybe<number>
+        title: Maybe<string>
+        description: Maybe<string>
+    }
+
+    export interface SuperCategory {
+        super_category_id: Maybe<number>
+        title: Maybe<string>
+    }
+
     export interface Ministry {
         ministry_id: number
         name: Maybe<string>
@@ -136,6 +148,13 @@ export namespace Messages {
         additional_information: Maybe<string>
     }
 
+    interface IssueCategory {
+        category_id: number
+        issue_id: number
+        assembly_id: number
+        category: string
+    }
+
     export interface PlenaryAgenda {
         item_id: number
         plenary_id: number
@@ -163,6 +182,78 @@ export namespace Messages {
         from: Maybe<string> //('Y-m-d H:i'),
         to: Maybe<string> //('Y-m-d H:i'),
         name: Maybe<string>
+    }
+
+    export interface Speech {
+        speech_id: string
+        plenary_id: number
+        assembly_id: number
+        issue_id: number
+        category: string
+        congressman_id: number
+        congressman_type: Maybe<string>
+        from: Maybe<string> //('Y-m-d H:i:s'),
+        to: Maybe<string> //('Y-m-d H:i:s'),
+        text: Maybe<string>
+        type: Maybe<string>
+        iteration: Maybe<string>
+        word_count: number
+        validated: boolean
+    }
+
+    export interface Document {
+        document_id: number
+        issue_id: number
+        category: string
+        assembly_id: number
+        date: string //'Y-m-d H:i:s'),
+        url: Maybe<string>
+        type: string
+    }
+
+    export interface CongressmanDocument  {
+        document_id: number
+        issue_id: number,
+        category: string,
+        assembly_id: number,
+        congressman_id: number,
+        minister: Maybe<string>,
+        order: number,
+    }
+
+
+    export interface CommitteeDocument  {
+        document_committee_id: number
+        document_id: number
+        assembly_id: number
+        issue_id: number
+        category: string
+        committee_id: number
+        part: Maybe<string>
+        name: Maybe<string>
+    }
+
+    export interface Vote {
+        vote_id: number,
+        issue_id: number,
+        category: string,
+        assembly_id: number,
+        document_id: Maybe<number>,
+        date: Maybe<string>,
+        type: Maybe<string>,
+        outcome: Maybe<string>,
+        method: Maybe<string>,
+        yes: Maybe<number>,
+        no: Maybe<number>,
+        inaction: Maybe<number>,
+        committee_to: Maybe<string>,
+    }
+
+    export interface VoteItem {
+        vote_id: number
+        congressman_id: number
+        vote: string
+        vote_item_id: number
     }
 }
 
@@ -281,8 +372,8 @@ export namespace Payload {
 
     export interface Issue {
         issue_id: number
-        assembly: Messages.Assembly
-        congressman: Messages.Congressman
+        assembly?: Messages.Assembly
+        congressman?: Messages.Congressman
         category: string
         name: Maybe<string>
         sub_name: Maybe<string>
@@ -297,6 +388,25 @@ export namespace Payload {
         costs_and_revenues: Maybe<string>
         deliveries: Maybe<string>
         additional_information: Maybe<string>
+        proponents?: Array<{
+            congressman: Messages.Congressman,
+            party: Messages.Party,
+            constituency: Messages.Constituency,
+        }>
+        content_categories?: Array<Messages.Category>
+        content_super_categories?: Array<Messages.SuperCategory>
+    }
+
+    export interface Category {
+        category_id: number;
+        super_category_id: Maybe<number>
+        title: Maybe<string>
+        description: Maybe<string>
+    }
+
+    export interface SuperCategory {
+        super_category_id: Maybe<number>
+        title: Maybe<string>
     }
 
     export interface Plenary {
@@ -333,5 +443,82 @@ export namespace Payload {
         instigator_party: Maybe<Messages.Party>
         instigator_constituency: Maybe<Messages.Constituency>
         instigator_title: Maybe<string>
+    }
+
+    interface Speech {
+        speech_id: string
+        plenary: Maybe<Messages.Plenary>
+        assembly: Messages.Assembly
+        issue: Messages.Issue
+        congressman: Maybe<Messages.Congressman>
+        congressman_party: Maybe<Messages.Party>
+        congressman_constituency: Maybe<Messages.Constituency>
+        congressman_type: Maybe<string>
+        from: Maybe<string> //('Y-m-d H:i:s'),
+        to: Maybe<string> //('Y-m-d H:i:s'),
+        text: Maybe<string>
+        type: Maybe<string>
+        iteration: Maybe<string>
+        word_count: number
+        validated: boolean
+    }
+
+    export interface Document {
+        document_id: number
+        issue: Messages.Issue
+        assembly: Messages.Assembly
+        date: string //'Y-m-d H:i:s'),
+        url: Maybe<string>
+        type: string
+        proponents?: Array<Payload.CongressmanDocument>
+        votes: Array<Payload.Vote>
+    }
+
+    export interface Vote {
+        vote_id: number,
+        issue: Messages.Issue,
+        assembly: Messages.Assembly,
+        document_id: Maybe<number>,
+        date: Maybe<string>,
+        type: Maybe<string>,
+        outcome: Maybe<string>,
+        method: Maybe<string>,
+        yes: Maybe<number>,
+        no: Maybe<number>,
+        inaction: Maybe<number>,
+        items: VoteItem[],
+        committee: Maybe<Messages.Committee>,
+        committee_first_assembly: Maybe<Messages.Assembly>
+        committee_last_assembly: Maybe<Messages.Assembly>
+    }
+
+    export interface VoteItem {
+        vote_item_id: number,
+        vote_id: number,
+        congressman: Messages.Congressman,
+        party: Maybe<Messages.Party>,
+        constituency: Maybe<Messages.Constituency>,
+        vote: string,
+    }
+
+    export interface CongressmanDocument {
+        congressman: Messages.Congressman,
+        party: Maybe<Messages.Party>,
+        constituency: Maybe<Messages.Constituency>,
+        minister: Maybe<string>,
+        order: number,
+    }
+
+    export interface CommitteeDocument {
+        document_committee_id: number
+        document_id: number
+        assembly_id: number
+        issue_id: number
+        category: string
+        committee?: Maybe<Messages.Committee>
+        committee_name?: Maybe<string>
+        committee_part?: Maybe<string>
+        committee_first_assembly: Maybe<Messages.Assembly>
+        committee_last_assembly: Maybe<Messages.Assembly>
     }
 }

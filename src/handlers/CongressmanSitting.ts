@@ -6,7 +6,7 @@ import type {
     Payload
 } from '../index.d.ts';
 
-export async function handle(data: Message<Messages.CongressmanSitting>, source: Source, store: Store): Promise<void> {
+export async function add(data: Message<Messages.CongressmanSitting>, source: Source, store: Store): Promise<void> {
     const {assembly_id, congressman_id, constituency_id, party_id, ...body} = data.body;
     const [assembly, congressman, constituency, party] = await Promise.all([
         source.get<Messages.Assembly>(`/loggjafarthing/${assembly_id}`),

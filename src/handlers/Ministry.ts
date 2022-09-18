@@ -6,7 +6,7 @@ import type {
     Payload
 } from '../index.d.ts';
 
-export async function handle(data: Message<Messages.Ministry>, source: Source, store: Store): Promise<void> {
+export async function add(data: Message<Messages.Ministry>, source: Source, store: Store): Promise<void> {
     const [first, last] = await Promise.all([
         data.body.first ? source.get<Messages.Assembly>(`/loggjafarthing/${data.body.first}`) : Promise.resolve(null),
         data.body.last ? source.get<Messages.Assembly>(`/loggjafarthing/${data.body.last}`) : Promise.resolve(null),

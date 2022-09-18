@@ -1,11 +1,6 @@
 import { assertEquals } from "https://deno.land/std@0.128.0/testing/asserts.ts";
-import { handle } from '../../src/handlers/MinisterSitting.ts';
+import { add } from '../../src/handlers/MinisterSitting.ts';
 import type {
-    // Assembly,
-    // Congressman ,
-    // Ministry,
-    // Constituency,
-    // Party,
     Messages
 } from '../../src/index.d.ts';
 
@@ -61,7 +56,7 @@ Deno.test("MinisterSitting.handle", async () => {
     const response = generateResponse();
 
 
-    await handle({
+    await add({
         id: 1,
         index: 'minister-sitting.add',
         body: {
@@ -171,7 +166,7 @@ Deno.test("MinisterSitting.handle | no constituency, no party", async () => {
     const response = generateResponse();
 
 
-    await handle({
+    await add({
         id: 1,
         index: 'minister-sitting.add',
         body: {
@@ -271,8 +266,7 @@ Deno.test("MinisterSitting.handle | no ministry assembly", async () => {
     }
     const response = generateResponse();
 
-
-    await handle({
+    await add({
         id: 1,
         index: 'minister-sitting.add',
         body: {

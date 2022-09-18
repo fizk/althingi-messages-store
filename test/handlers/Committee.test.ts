@@ -1,8 +1,8 @@
 import { assertEquals } from "https://deno.land/std@0.128.0/testing/asserts.ts";
-import { handle } from '../../src/handlers/Committee.ts';
+import { add } from '../../src/handlers/Committee.ts';
 
 Deno.test("Committee.handle | incuding first", async () => {
-    await handle({
+    await add({
         id: 1,
         index: 'committee.add',
         body: {
@@ -43,7 +43,7 @@ Deno.test("Committee.handle | incuding first", async () => {
 });
 
 Deno.test("Committee.add | incuding last", async () => {
-    await handle({
+    await add({
         id: 1,
         index: 'committee.add',
         body: {

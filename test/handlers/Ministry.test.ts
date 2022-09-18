@@ -1,8 +1,8 @@
 import { assertEquals } from "https://deno.land/std@0.128.0/testing/asserts.ts";
-import { handle } from '../../src/handlers/Ministry.ts'
+import { add } from '../../src/handlers/Ministry.ts'
 
 Deno.test("handlers.Ministry.add | incuding first", async () => {
-    await handle({
+    await add({
         id: 1,
         index: 'ministry.add',
         body: {
@@ -43,7 +43,7 @@ Deno.test("handlers.Ministry.add | incuding first", async () => {
 });
 
 Deno.test("handlers.Ministry.add | incuding last", async () => {
-    await handle({
+    await add({
         id: 1,
         index: 'ministry.add',
         body: {

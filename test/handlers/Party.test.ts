@@ -1,9 +1,9 @@
 import { assertEquals } from "https://deno.land/std@0.128.0/testing/asserts.ts";
-import { handle } from '../../src/handlers/Party.ts'
+import { add } from '../../src/handlers/Party.ts'
 
 // Compact form: name and function
 Deno.test("handlers.Party.add", async () => {
-    await handle({
+    await add({
         id: 1,
         index: 'party.add',
         body: {

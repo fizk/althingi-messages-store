@@ -7,7 +7,7 @@ import type {
  } from '../index.d.ts';
 
 
-export async function handle(data: Message<Messages.CommitteeSitting>, source: Source, store: Store): Promise<void> {
+export async function add(data: Message<Messages.CommitteeSitting>, source: Source, store: Store): Promise<void> {
     const { assembly_id, committee_id, congressman_id, ...body } = data.body;
     const [
         assembly,
